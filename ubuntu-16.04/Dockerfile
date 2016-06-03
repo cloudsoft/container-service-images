@@ -1,8 +1,8 @@
-FROM centos
+FROM ubuntu:16.04
 #ARG ROOT_PASSWORD=p4ssw0rd
 MAINTAINER Cloudsoft "brooklyn@cloudsoftcorp.com"
 
-# CLOCKER_VERSION_BELOW
+# CONTAINER_SERVICE_VERSION_BELOW
 LABEL version="2.0.0-SNAPSHOT"
 
 # setup locale
@@ -12,7 +12,8 @@ RUN type locale-gen ; if [ "$?" -eq "0" ] ; then locale-gen en_US.UTF-8 ; fi
 RUN echo 'root:p4ssw0rd' | chpasswd
 
 # install sshd
-RUN yum -y install openssh-server ; \
+RUN apt-get update ; \
+    apt-get install -y openssh-server ; \
     mkdir /var/run/sshd ; \
     chmod 600 /var/run/sshd
 
