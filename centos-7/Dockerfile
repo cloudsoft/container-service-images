@@ -8,8 +8,8 @@ LABEL version="2.0.0-SNAPSHOT"
 # setup root account
 RUN echo 'root:p4ssw0rd' | chpasswd
 
-# install sshd
-RUN yum -y install openssh-server ; \
+# install sshd and other frequently used packages
+RUN yum -y install openssh-server which sudo; \
     mkdir /var/run/sshd ; \
     chmod 600 /var/run/sshd
 
