@@ -5,9 +5,6 @@ MAINTAINER Cloudsoft "brooklyn@cloudsoftcorp.com"
 # CONTAINER_SERVICE_VERSION_BELOW
 LABEL version="2.0.0-SNAPSHOT"
 
-# setup locale
-RUN type locale-gen ; if [ "$?" -eq "0" ] ; then locale-gen en_US.UTF-8 ; fi
-
 # setup root account
 RUN echo 'root:p4ssw0rd' | chpasswd
 
