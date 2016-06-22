@@ -1,11 +1,10 @@
 FROM centos:7
-#ARG ROOT_PASSWORD=p4ssw0rd
 MAINTAINER Cloudsoft "brooklyn@cloudsoftcorp.com"
 
 # CONTAINER_SERVICE_VERSION_BELOW
 LABEL version="2.0.0-SNAPSHOT"
 
-# setup root account
+# setup root account with temporary password (optionally overridden in docker-entrypoint.sh)
 RUN echo 'root:p4ssw0rd' | chpasswd
 
 # install sshd and other frequently used packages
@@ -30,11 +29,9 @@ RUN sed -i.bk 's/PermitRootLogin.*$/PermitRootLogin yes/g' /etc/ssh/sshd_config 
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd || true
 
-# Create the .ssh directory for mounting
-RUN mkdir /root/.ssh ; \
-    chmod 700 /root/.ssh
-VOLUME [ "/root/.ssh" ]
+COPY docker-entrypoint.sh /
+RUN chmod 700 /docker-entrypoint.sh
 
 EXPOSE 22
 
-CMD [ "/usr/sbin/sshd", "-D" ]
+ENTRYPOINT ["/docker-entrypoint.sh"]
