@@ -12,7 +12,7 @@ RUN echo 'root:p4ssw0rd' | chpasswd
 
 # install sshd
 RUN apt-get update ; \
-    apt-get install -y openssh-server ; \
+    apt-get install -y openssh-server sudo; \
     mkdir /var/run/sshd ; \
     chmod 600 /var/run/sshd
 
