@@ -1,5 +1,4 @@
 FROM ubuntu:14.04
-#ARG ROOT_PASSWORD=p4ssw0rd
 MAINTAINER Cloudsoft "brooklyn@cloudsoftcorp.com"
 
 # CONTAINER_SERVICE_VERSION_BELOW
@@ -8,7 +7,7 @@ LABEL version="2.0.0-SNAPSHOT"
 # setup locale
 RUN type locale-gen ; if [ "$?" -eq "0" ] ; then locale-gen en_US.UTF-8 ; fi
 
-# setup root account
+# setup root account with temporary password (optionally overridden in docker-entrypoint.sh)
 RUN echo 'root:p4ssw0rd' | chpasswd
 
 # install sshd
@@ -34,6 +33,9 @@ RUN sed -i.bk 's/PermitRootLogin.*$/PermitRootLogin yes/g' /etc/ssh/sshd_config 
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd || true
 
+COPY docker-entrypoint.sh /
+RUN chmod 700 /docker-entrypoint.sh
+
 # Create the .ssh directory for mounting
 RUN mkdir /root/.ssh ; \
     chmod 700 /root/.ssh
@@ -41,4 +43,4 @@ VOLUME [ "/root/.ssh" ]
 
 EXPOSE 22
 
-CMD [ "/usr/sbin/sshd", "-D" ]
+ENTRYPOINT ["/docker-entrypoint.sh"]
