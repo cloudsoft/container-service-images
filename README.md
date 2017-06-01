@@ -1,2 +1,3 @@
 # container-service-images
-Images used in https://github.com/cloudsoft/container-service
+
+Images used by the locations in the `brooklyn-locations-container` module.
