@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Cloudsoft "brooklyn@cloudsoftcorp.com"
+MAINTAINER Andrew Kennedy "grkvlt@apache.org"
 
 # CONTAINER_SERVICE_VERSION_BELOW
 LABEL version="2.0.0-SNAPSHOT"
