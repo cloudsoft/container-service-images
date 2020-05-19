@@ -40,7 +40,7 @@ RUN which curl || apt -y install curl
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN echo exit 0 > /usr/sbin/policy-rc.d
 RUN apt-get install -y openssh-server netbase perl libnuma1 psmisc  locales locales-all libxslt1.1
-RUN ln -fs /usr/share/zoneinfo/Europe/Dublin /etc/localtime
+RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime
 RUN apt-get install -y tzdata
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN echo "$(date)" >> /tmp/image.info
