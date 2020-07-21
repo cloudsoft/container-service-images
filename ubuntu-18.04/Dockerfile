@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Andrew Kennedy "grkvlt@apache.org"
+MAINTAINER Iuliana Cosmina "iuliana@cloudsoft.io"
 
 # CONTAINER_SERVICE_VERSION_BELOW
 LABEL version="2.0.0-SNAPSHOT"
@@ -12,6 +12,7 @@ RUN echo 'root:p4ssw0rd' | chpasswd
 
 # install sshd
 RUN apt-get update ; \
+    apt-get install -y --no-install-recommends apt-utils ;\
     apt-get install -y openssh-server sudo; \
     mkdir /var/run/sshd ; \
     chmod 600 /var/run/sshd
@@ -33,6 +34,16 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 
 COPY docker-entrypoint.sh /
 RUN chmod 700 /docker-entrypoint.sh
+
+# Needed to support install of PostgreSQL 12 and MySQL 5.7
+RUN which curl || apt -y install curl
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN echo exit 0 > /usr/sbin/policy-rc.d
+RUN apt-get install -y openssh-server netbase perl libnuma1 psmisc  locales locales-all libxslt1.1
+RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime
+RUN apt-get install -y tzdata
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+RUN echo "$(date)" >> /tmp/image.info
 
 EXPOSE 22
 
