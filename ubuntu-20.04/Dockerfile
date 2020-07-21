@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER Iuliana Cosmina "iuliana@apache.org"
 
 # CONTAINER_SERVICE_VERSION_BELOW
