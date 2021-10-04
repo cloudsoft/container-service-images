@@ -5,7 +5,7 @@
 set -e
 
 echo
-echo "Starting Ubuntu 20.04 with SSH server"
+echo "Starting Ubuntu 21.10 with SSH server"
 echo "=============================================="
 echo
 echo "User 'root' config"
