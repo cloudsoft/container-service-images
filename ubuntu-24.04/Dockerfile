@@ -1,4 +1,4 @@
-FROM fedora:39
+FROM ubuntu:24.04
 MAINTAINER Iuliana Cosmina "iuliana@apache.org"
 
 # CONTAINER_SERVICE_VERSION_BELOW
@@ -11,8 +11,8 @@ RUN type locale-gen ; if [ "$?" -eq "0" ] ; then locale-gen en_US.UTF-8 ; fi
 RUN echo 'root:p4ssw0rd' | chpasswd
 
 # install sshd
-RUN yum update ; \
-    yum install -y openssh-server sudo passwd which procps curl; \
+RUN apt-get update ; \
+    apt-get install -y openssh-server sudo curl; \
     mkdir /var/run/sshd ; \
     chmod 600 /var/run/sshd
 
