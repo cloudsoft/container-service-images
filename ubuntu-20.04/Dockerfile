@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER Iuliana Cosmina "iuliana@apache.org"
 
 # CONTAINER_SERVICE_VERSION_BELOW
@@ -12,7 +12,7 @@ RUN echo 'root:p4ssw0rd' | chpasswd
 
 # install sshd
 RUN apt-get update ; \
-    apt-get install -y openssh-server sudo; \
+    apt-get install -y openssh-server sudo curl; \
     mkdir /var/run/sshd ; \
     chmod 600 /var/run/sshd
 
